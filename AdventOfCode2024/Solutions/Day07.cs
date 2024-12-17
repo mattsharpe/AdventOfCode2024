@@ -46,6 +46,5 @@ namespace AdventOfCode2024.Solutions
 
             return addResult || multiplyResult || concatenateResult;
         }
-
     }
 }
