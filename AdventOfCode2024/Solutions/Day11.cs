@@ -5,13 +5,13 @@ namespace AdventOfCode2024.Solutions
         public long Part1(string[] input)
         {
             var stones = ParseInput(input);
-            return Simulate(stones);
+            return SimulateWithDictionary(stones, 25);
         }
 
         public long Part2(string[] input)
         {
             var stones = ParseInput(input);
-            return SimulateWithDictionary(stones);
+            return SimulateWithDictionary(stones, 75);
         }
 
         List<long> ParseInput(string[] input)
@@ -19,42 +19,11 @@ namespace AdventOfCode2024.Solutions
             return input[0].Split(' ').Select(long.Parse).ToList();
         }
 
-        private int Simulate(List<long> stones)
-        {
-            for (int blink = 0; blink < 25; blink++)
-            {
-                List<long> newStones = [];
-                foreach (var stone in stones)
-                {
-                    if (stone == 0)
-                    {
-                        newStones.Add(1);
-                    }
-                    else if (stone.ToString().Length % 2 == 0)
-                    {
-                        string s = stone.ToString();
-                        int mid = s.Length / 2;
-                        string left = s[..mid];
-                        string right = s[mid..];
-                        newStones.Add(long.Parse(left));
-                        newStones.Add(long.Parse(right));
-                    }
-                    else
-                    {
-                        newStones.Add(stone * 2024);
-                    }
-                }
-                stones = newStones;
-            }
-
-            return stones.Count;
-        }
-
-        private long SimulateWithDictionary(List<long> list)
+        private long SimulateWithDictionary(List<long> list, int iterations)
         {
             var stones = list.ToDictionary(x => x, x => 1L);
 
-            for (int blink = 0; blink < 75; blink++)
+            for (int blink = 0; blink < iterations; blink++)
             {
                 Dictionary<long, long> newStones = [];
 
